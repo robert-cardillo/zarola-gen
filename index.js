@@ -14,22 +14,23 @@ const rollDiceNTimes = (n) => {
   return results;
 };
 
-const getPhraseByNumber = (number, data) => {
-  // Return the phrase object that has the given number.
-  return data.filter((phrase) => phrase.numara === number)[0].kelime;
+const getWordByNumber = (number, data) => {
+  // Return the word that corresponds to the given number.
+  return data.filter((word) => word.numara === number)[0].kelime;
 };
 
-const run = async (phraseCount) => {
-  // Get data from the server and generate phrases.
+const run = async (wordCount, separator) => {
+  // Get data from the server and generate words.
   const response = await fetch("https://zarola.oyd.org.tr/zarola.json");
   const data = await response.json();
-  const phrases = [];
-  for (let i = 0; i < phraseCount; i++) {
+  const words = [];
+  for (let i = 0; i < wordCount; i++) {
     const number = +rollDiceNTimes(5).join("");
-    phrases.push(getPhraseByNumber(number, data, phrases));
+    words.push(getWordByNumber(number, data, words));
   }
-  console.log(phrases.join("-"));
+  console.log(words.join(separator));
 };
 
-const phraseCount = +process.argv.at(-1);
-run(phraseCount);
+const wordCount = +process.argv.slice(2)[0] || 7;
+const separator = process.argv.slice(2)[1] || "-";
+run(wordCount, separator);
