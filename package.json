@@ -1,0 +1,20 @@
+{
+  "name": "zarola-gen",
+  "version": "1.0.0",
+  "description": "Generates a Zarola passphrase",
+  "main": "index.js",
+  "keywords": [
+    "zarola",
+    "passphrase",
+    "generator"
+  ],
+  "bin": {
+    "zarola-gen": "./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robert-cardillo/zarola-gen.git"
+  },
+  "author": "robert.cardillo",
+  "license": "ISC"
+}
