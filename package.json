@@ -1,6 +1,6 @@
 {
   "name": "zarola-gen",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Generates a Zarola passphrase",
   "main": "index.js",
   "keywords": [

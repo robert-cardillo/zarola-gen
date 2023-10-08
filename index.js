@@ -19,18 +19,24 @@ const getWordByNumber = (number, data) => {
   return data.filter((word) => word.numara === number)[0].kelime;
 };
 
-const run = async (wordCount, separator) => {
+const run = async (wordCount, separator, minWordLength, maxWordLength) => {
   // Get data from the server and generate words.
   const response = await fetch("https://zarola.oyd.org.tr/zarola.json");
   const data = await response.json();
   const words = [];
   for (let i = 0; i < wordCount; i++) {
-    const number = +rollDiceNTimes(5).join("");
-    words.push(getWordByNumber(number, data, words));
+    let word;
+    do {
+      const number = +rollDiceNTimes(5).join("");
+      word = getWordByNumber(number, data, words);
+    } while (minWordLength > word.length || word.length > maxWordLength);
+    words.push(word);
   }
   console.log(words.join(separator));
 };
 
 const wordCount = +process.argv.slice(2)[0] || 7;
-const separator = process.argv.slice(2)[1] || "-";
-run(wordCount, separator);
+const separator = process.argv.slice(2)[1] || " ";
+const minWordLength = process.argv.slice(2)[2] || 0;
+const maxWordLength = process.argv.slice(2)[3] || 100;
+run(wordCount, separator, minWordLength, maxWordLength);
